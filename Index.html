@@ -1,0 +1,477 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Tu Rutina de Transformación</title>  
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">  
+<style>  
+  :root {  
+    --black: #0a0a0a;  
+    --dark: #111318;  
+    --card: #181c24;  
+    --card2: #1e2330;  
+    --orange: #f4622a;  
+    --orange2: #ff8c5a;  
+    --green: #2ecc71;  
+    --blue: #3a7bd5;  
+    --text: #e8eaf0;  
+    --muted: #8a8fa8;  
+    --border: rgba(255,255,255,0.07);  
+  }  
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }  
+  
+  body {  
+    background: var(--black);  
+    color: var(--text);  
+    font-family: 'DM Sans', sans-serif;  
+    line-height: 1.6;  
+    min-height: 100vh;  
+  }  
+  
+  .hero {  
+    background: linear-gradient(135deg, #0a0a0a 0%, #111520 60%, #1a0f08 100%);  
+    padding: 60px 24px 48px;  
+    text-align: center;  
+    position: relative;  
+    overflow: hidden;  
+    border-bottom: 1px solid var(--border);  
+  }  
+  .hero::before {  
+    content: '';  
+    position: absolute;  
+    top: -80px; left: 50%;  
+    transform: translateX(-50%);  
+    width: 600px; height: 300px;  
+    background: radial-gradient(ellipse, rgba(244,98,42,0.18) 0%, transparent 70%);  
+    pointer-events: none;  
+  }  
+  .hero-label {  
+    font-size: 11px;  
+    letter-spacing: 4px;  
+    color: var(--orange);  
+    text-transform: uppercase;  
+    margin-bottom: 14px;  
+    font-weight: 500;  
+  }  
+  .hero h1 {  
+    font-family: 'Bebas Neue', sans-serif;  
+    font-size: clamp(52px, 12vw, 90px);  
+    line-height: 0.95;  
+    letter-spacing: 2px;  
+    background: linear-gradient(135deg, #fff 30%, #f4622a 100%);  
+    -webkit-background-clip: text;  
+    -webkit-text-fill-color: transparent;  
+    background-clip: text;  
+    margin-bottom: 18px;  
+  }  
+  .hero p {  
+    color: var(--muted);  
+    font-size: 15px;  
+    max-width: 460px;  
+    margin: 0 auto;  
+  }  
+  
+  .stats-bar {  
+    display: grid;  
+    grid-template-columns: repeat(4, 1fr);  
+    gap: 1px;  
+    background: var(--border);  
+    border-bottom: 1px solid var(--border);  
+  }  
+  .stat {  
+    background: var(--dark);  
+    padding: 20px 16px;  
+    text-align: center;  
+  }  
+  .stat-num {  
+    font-family: 'Bebas Neue', sans-serif;  
+    font-size: 32px;  
+    color: var(--orange);  
+    line-height: 1;  
+  }  
+  .stat-label {  
+    font-size: 10px;  
+    color: var(--muted);  
+    letter-spacing: 2px;  
+    text-transform: uppercase;  
+    margin-top: 4px;  
+  }  
+  
+  .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }  
+  section { padding: 48px 0; border-bottom: 1px solid var(--border); }  
+  
+  .section-tag {  
+    display: inline-block;  
+    background: rgba(244,98,42,0.12);  
+    color: var(--orange);  
+    font-size: 10px;  
+    letter-spacing: 3px;  
+    text-transform: uppercase;  
+    padding: 5px 12px;  
+    border-radius: 2px;  
+    margin-bottom: 16px;  
+    border: 1px solid rgba(244,98,42,0.2);  
+  }  
+  .section-title {  
+    font-family: 'Bebas Neue', sans-serif;  
+    font-size: clamp(34px, 7vw, 52px);  
+    letter-spacing: 1px;  
+    line-height: 1;  
+    margin-bottom: 8px;  
+  }  
+  .section-sub {  
+    color: var(--muted);  
+    font-size: 14px;  
+    margin-bottom: 32px;  
+  }  
+  
+  .alert {  
+    background: rgba(244,98,42,0.08);  
+    border: 1px solid rgba(244,98,42,0.25);  
+    border-left: 3px solid var(--orange);  
+    border-radius: 4px;  
+    padding: 18px 20px;  
+    margin-bottom: 32px;  
+    font-size: 14px;  
+    color: #ccc;  
+  }  
+  .alert strong { color: var(--orange2); }  
+  
+  .timeline { display: flex; flex-direction: column; gap: 0; }  
+  .t-item {  
+    display: grid;  
+    grid-template-columns: 120px 1fr;  
+    gap: 0;  
+    position: relative;  
+  }  
+  .t-item:not(:last-child)::after {  
+    content: '';  
+    position: absolute;  
+    left: 119px;  
+    top: 52px;  
+    bottom: 0;  
+    width: 1px;  
+    background: var(--border);  
+  }  
+  .t-left { padding: 24px 24px 24px 0; text-align: right; }  
+  .t-period { font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: var(--orange); letter-spacing: 1px; }  
+  .t-weeks { font-size: 11px; color: var(--muted); }  
+  .t-dot {  
+    position: absolute; left: 113px; top: 28px;  
+    width: 14px; height: 14px; border-radius: 50%;  
+    background: var(--orange); border: 2px solid var(--black); z-index: 1;  
+  }  
+  .t-right { padding: 24px 0 24px 32px; border-left: 1px solid var(--border); }  
+  .t-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; color: white; }  
+  .t-desc { font-size: 13px; color: var(--muted); margin-bottom: 10px; }  
+  .t-gains { display: flex; flex-wrap: wrap; gap: 6px; }  
+  .gain-tag {  
+    background: rgba(46,204,113,0.1);  
+    border: 1px solid rgba(46,204,113,0.2);  
+    color: var(--green);  
+    font-size: 11px; padding: 3px 9px; border-radius: 2px; letter-spacing: 0.5px;  
+  }  
+  
+  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 24px; }  
+  .day-card {  
+    background: var(--card); border: 1px solid var(--border);  
+    border-radius: 6px; padding: 10px 6px; text-align: center; transition: all 0.2s;  
+  }  
+  .day-card.active { background: var(--card2); border-color: rgba(244,98,42,0.3); }  
+  .day-card.rest { opacity: 0.4; }  
+  .day-name { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }  
+  .day-icon { font-size: 18px; margin-bottom: 4px; }  
+  .day-label { font-size: 9px; color: var(--orange); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }  
+  .day-card.rest .day-label { color: var(--muted); }  
+  
+  .phase-tabs {  
+    display: flex; gap: 0; margin-bottom: 24px;  
+    border: 1px solid var(--border); border-radius: 6px; overflow: hidden;  
+  }  
+  .phase-tab {  
+    flex: 1; padding: 12px 8px; text-align: center; cursor: pointer;  
+    font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--muted);  
+    background: var(--card); border: none; transition: all 0.2s; text-transform: uppercase;  
+  }  
+  .phase-tab.active { background: var(--orange); color: white; }  
+  .phase-content { display: none; }  
+  .phase-content.active { display: block; }  
+  
+  .exercise-day { margin-bottom: 28px; }  
+  .ex-day-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }  
+  .ex-day-num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--orange); line-height: 1; }  
+  .ex-day-title { font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }  
+  .ex-day-focus { font-size: 11px; color: var(--muted); }  
+  .exercises { display: flex; flex-direction: column; gap: 8px; }  
+  .ex-row {  
+    background: var(--card); border: 1px solid var(--border); border-radius: 6px;  
+    padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px;  
+  }  
+  .ex-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }  
+  .ex-tip { font-size: 11px; color: var(--muted); }  
+  .ex-sets { text-align: right; white-space: nowrap; }  
+  .ex-sets-num { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--orange); line-height: 1; }  
+  .ex-sets-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; }  
+  
+  .nutrition-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }  
+  .nut-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 16px; text-align: center; }  
+  .nut-num { font-family: 'Bebas Neue', sans-serif; font-size: 38px; line-height: 1; margin-bottom: 4px; }  
+  .nut-unit { font-size: 14px; color: var(--muted); margin-left: 3px; }  
+  .nut-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }  
+  .nut-card.prot .nut-num { color: var(--orange); }  
+  .nut-card.carb .nut-num { color: var(--blue); }  
+  .nut-card.fat .nut-num { color: var(--green); }  
+  
+  .rules-list { display: flex; flex-direction: column; gap: 10px; }  
+  .rule-item {  
+    display: flex; gap: 14px; align-items: flex-start;  
+    background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px;  
+  }  
+  .rule-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }  
+  .rule-text { font-size: 13px; color: #ccc; }  
+  .rule-text strong { color: white; display: block; margin-bottom: 2px; }  
+  
+  .rebote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }  
+  .rebote-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 18px 16px; }  
+  .rebote-icon { font-size: 24px; margin-bottom: 10px; }  
+  .rebote-title { font-weight: 700; font-size: 13px; margin-bottom: 6px; color: white; text-transform: uppercase; letter-spacing: 0.5px; }  
+  .rebote-text { font-size: 12px; color: var(--muted); line-height: 1.5; }  
+  
+  .progress-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }  
+  .prog-card {  
+    background: var(--card); border: 1px solid var(--border); border-radius: 6px;  
+    padding: 18px 14px; position: relative; overflow: hidden;  
+  }  
+  .prog-card::before {  
+    content: ''; position: absolute; top: 0; left: 0; right: 0;  
+    height: 2px; background: linear-gradient(90deg, var(--orange), transparent);  
+  }  
+  .prog-month { font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: var(--orange); letter-spacing: 2px; margin-bottom: 8px; }  
+  .prog-weight { font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1; color: white; margin-bottom: 2px; }  
+  .prog-weight span { font-size: 16px; color: var(--muted); }  
+  .prog-kg { font-size: 11px; color: var(--green); margin-bottom: 10px; }  
+  .prog-changes { display: flex; flex-direction: column; gap: 3px; }  
+  .prog-change { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }  
+  .prog-change::before { content: '→'; color: var(--orange); font-size: 10px; }  
+  
+  footer { padding: 40px 24px; text-align: center; color: var(--muted); font-size: 12px; letter-spacing: 0.5px; }  
+  
+  @media (max-width: 600px) {  
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }  
+    .week-grid { grid-template-columns: repeat(4, 1fr); }  
+    .nutrition-grid { grid-template-columns: 1fr 1fr; }  
+    .rebote-grid { grid-template-columns: 1fr; }  
+    .progress-timeline { grid-template-columns: repeat(2, 1fr); }  
+    .t-item { grid-template-columns: 90px 1fr; }  
+    .t-item::after { left: 89px; }  
+    .t-dot { left: 83px; }  
+    .phase-tab { font-size: 10px; padding: 10px 4px; }  
+  }  
+</style>  
+</head>  
+<body>  
+  
+<div class="hero">  
+  <div class="hero-label">Plan Personalizado · 20 años · 83kg · 1.68m</div>  
+  <h1>PLAN DE<br>TRANSFORMACIÓN</h1>  
+  <p>Fuerza sin gimnasio · Pérdida de grasa · Sin efecto rebote · 6 meses de roadmap</p>  
+</div>  
+  
+<div class="stats-bar">  
+  <div class="stat"><div class="stat-num">29.4</div><div class="stat-label">IMC Actual</div></div>  
+  <div class="stat"><div class="stat-num">~22</div><div class="stat-label">IMC Meta</div></div>  
+  <div class="stat"><div class="stat-num">-15kg</div><div class="stat-label">Objetivo grasa</div></div>  
+  <div class="stat"><div class="stat-num">6m</div><div class="stat-label">Duración plan</div></div>  
+</div>  
+  
+<div class="container">  
+  
+  <section>  
+    <div class="section-tag">Tu diagnóstico</div>  
+    <h2 class="section-title">LO QUE DICE<br>TU PERFIL</h2>  
+    <p class="section-sub">Entender tu punto de partida es clave para no cometer errores típicos</p>  
+    <div class="alert"><strong>⚡ Buena noticia:</strong> A los 20 años tu metabolismo y capacidad de recuperación están en su pico. Tienes una ventaja enorme. Con este plan vas a hacer <em>recomposición corporal</em>: perder grasa y mantener (o ganar) músculo al mismo tiempo.</div>  
+    <div class="rules-list">  
+      <div class="rule-item"><div class="rule-icon">📊</div><div class="rule-text"><strong>IMC 29.4 → Sobrepeso moderado</strong>Tienes entre 15-20 kg de grasa a perder para llegar a un peso saludable (~65-68 kg). Con el enfoque correcto, eso es posible en 5-7 meses sin perder músculo.</div></div>  
+      <div class="rule-item"><div class="rule-icon">🏠</div><div class="rule-text"><strong>Vida sedentaria = punto de partida bajo</strong>Eso es positivo: los principiantes ganan músculo y fuerza muy rápido aunque estén en déficit calórico. Aprovecha la "ganancia de novato".</div></div>  
+      <div class="rule-item"><div class="rule-icon">🍔</div><div class="rule-text"><strong>Alimentación deficiente = mayor cambio visible</strong>Solo mejorar tu dieta va a producir resultados notorios en las primeras 2 semanas. No hace falta ser perfecto, solo consistente.</div></div>  
+    </div>  
+  </section>  
+  
+  <section>  
+    <div class="section-tag">Estructura semanal</div>  
+    <h2 class="section-title">TU SEMANA<br>TIPO</h2>  
+    <p class="section-sub">3-4 días de entrenamiento de fuerza + descanso activo</p>  
+    <div class="week-grid">  
+      <div class="day-card active"><div class="day-name">LUN</div><div class="day-icon">💪</div><div class="day-label">Fuerza A</div></div>  
+      <div class="day-card rest"><div class="day-name">MAR</div><div class="day-icon">🚶</div><div class="day-label">Caminar</div></div>  
+      <div class="day-card active"><div class="day-name">MIÉ</div><div class="day-icon">🔥</div><div class="day-label">Fuerza B</div></div>  
+      <div class="day-card rest"><div class="day-name">JUE</div><div class="day-icon">🚶</div><div class="day-label">Caminar</div></div>  
+      <div class="day-card active"><div class="day-name">VIE</div><div class="day-icon">⚡</div><div class="day-label">Fuerza A</div></div>  
+      <div class="day-card active"><div class="day-name">SÁB</div><div class="day-icon">🏃</div><div class="day-label">Fuerza B</div></div>  
+      <div class="day-card rest"><div class="day-name">DOM</div><div class="day-icon">😴</div><div class="day-label">Descanso</div></div>  
+    </div>  
+    <div class="alert"><strong>🚶 Los días de "caminar":</strong> 30-45 minutos de caminata a paso moderado. No es cardio duro, es actividad de bajo impacto que quema grasa sin degradar músculo.</div>  
+  </section>  
+  
+  <section>  
+    <div class="section-tag">Los ejercicios</div>  
+    <h2 class="section-title">RUTINA POR<br>FASES</h2>  
+    <p class="section-sub">El cuerpo necesita progresión. Cada fase es más exigente que la anterior.</p>  
+  
+    <div class="phase-tabs">  
+      <button class="phase-tab active" onclick="showPhase('fase1',this)">Fase 1<br><small>Sem 1-6</small></button>  
+      <button class="phase-tab" onclick="showPhase('fase2',this)">Fase 2<br><small>Sem 7-14</small></button>  
+      <button class="phase-tab" onclick="showPhase('fase3',this)">Fase 3<br><small>Sem 15-24</small></button>  
+    </div>  
+  
+    <div id="fase1" class="phase-content active">  
+      <div class="alert" style="margin-bottom:20px;"><strong>Fase 1 – Base y aprendizaje (Semanas 1-6):</strong> Dominar la técnica es lo más importante. Descansa 90 segundos entre series.</div>  
+      <div class="exercise-day">  
+        <div class="ex-day-header"><div class="ex-day-num">A</div><div><div class="ex-day-title">Día A — Piernas + Core</div><div class="ex-day-focus">Cuádriceps, glúteos, isquios, abdomen</div></div></div>  
+        <div class="exercises">  
+          <div class="ex-row"><div><div class="ex-name">Sentadilla con peso corporal</div><div class="ex-tip">Pies al ancho de hombros, baja hasta que los muslos queden paralelos al piso</div></div><div class="ex-sets"><div class="ex-sets-num">3×15</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Estocada alternada</div><div class="ex-tip">Da un paso largo hacia adelante, baja la rodilla trasera sin tocar el piso</div></div><div class="ex-sets"><div class="ex-sets-num">3×10</div><div class="ex-sets-label">c/ pierna</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Puente de glúteo</div><div class="ex-tip">Tumbado boca arriba, pies apoyados, sube las caderas y aprieta el glúteo arriba</div></div><div class="ex-sets"><div class="ex-sets-num">3×20</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Plancha frontal</div><div class="ex-tip">Cuerpo recto como tabla, no dejes caer la cadera ni subas el trasero</div></div><div class="ex-sets"><div class="ex-sets-num">3×20s</div><div class="ex-sets-label">progresa a 40s</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Elevación de piernas tumbado</div><div class="ex-tip">Lumbares pegadas al piso, sube ambas piernas juntas a 90°, baja lento</div></div><div class="ex-sets"><div class="ex-sets-num">3×12</div><div class="ex-sets-label">series×reps</div></div></div>  
+        </div>  
+      </div>  
+      <div class="exercise-day">  
+        <div class="ex-day-header"><div class="ex-day-num">B</div><div><div class="ex-day-title">Día B — Tren Superior + Core</div><div class="ex-day-focus">Pecho, espalda, hombros, bíceps, tríceps</div></div></div>  
+        <div class="exercises">  
+          <div class="ex-row"><div><div class="ex-name">Flexiones (Push-ups)</div><div class="ex-tip">Si no puedes hacer 5 seguidas, hazlas con rodillas en el piso hasta ganar fuerza</div></div><div class="ex-sets"><div class="ex-sets-num">3×8</div><div class="ex-sets-label">aumenta c/semana</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Flexiones de diamante</div><div class="ex-tip">Manos juntas formando un triángulo bajo el pecho. Enfoca tríceps</div></div><div class="ex-sets"><div class="ex-sets-num">2×8</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Remo con mochila</div><div class="ex-tip">Llena una mochila con libros. Apoyo en mesa, tira del codo hacia atrás</div></div><div class="ex-sets"><div class="ex-sets-num">3×12</div><div class="ex-sets-label">c/ brazo</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Dips en silla</div><div class="ex-tip">Manos en el borde de una silla firme, piernas estiradas, baja y sube con brazos</div></div><div class="ex-sets"><div class="ex-sets-num">3×10</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Superman (extensión de espalda)</div><div class="ex-tip">Tumbado boca abajo, levanta brazos y piernas simultáneamente. Mantén 2 segundos</div></div><div class="ex-sets"><div class="ex-sets-num">3×12</div><div class="ex-sets-label">series×reps</div></div></div>  
+        </div>  
+      </div>  
+    </div>  
+  
+    <div id="fase2" class="phase-content">  
+      <div class="alert" style="margin-bottom:20px;"><strong>Fase 2 – Construcción (Semanas 7-14):</strong> Aumenta la dificultad. Añades variantes más duras y carga extra. Descansa 60-75 segundos entre series.</div>  
+      <div class="exercise-day">  
+        <div class="ex-day-header"><div class="ex-day-num">A</div><div><div class="ex-day-title">Día A — Piernas + Core avanzado</div><div class="ex-day-focus">Mayor intensidad, sentadilla búlgara, peso añadido</div></div></div>  
+        <div class="exercises">  
+          <div class="ex-row"><div><div class="ex-name">Sentadilla búlgara (1 pierna)</div><div class="ex-tip">Pie trasero elevado en una silla. Exige más equilibrio y fuerza unilateral</div></div><div class="ex-sets"><div class="ex-sets-num">4×10</div><div class="ex-sets-label">c/ pierna</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Sentadilla con salto</div><div class="ex-tip">Baja en sentadilla y explota hacia arriba. Activa fibras rápidas y quema más calorías</div></div><div class="ex-sets"><div class="ex-sets-num">3×12</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Puente de glúteo a una pierna</div><div class="ex-tip">Igual que antes pero con una pierna extendida. Duplica la demanda muscular</div></div><div class="ex-sets"><div class="ex-sets-num">3×15</div><div class="ex-sets-label">c/ pierna</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Plancha lateral</div><div class="ex-tip">Apoyado en un codo, cuerpo recto de lado. Activa oblicuos y estabilizadores</div></div><div class="ex-sets"><div class="ex-sets-num">3×25s</div><div class="ex-sets-label">c/ lado</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Mountain climbers</div><div class="ex-tip">Posición de plancha, alterna rodillas al pecho a ritmo moderado-rápido</div></div><div class="ex-sets"><div class="ex-sets-num">3×30s</div><div class="ex-sets-label">series×tiempo</div></div></div>  
+        </div>  
+      </div>  
+      <div class="exercise-day">  
+        <div class="ex-day-header"><div class="ex-day-num">B</div><div><div class="ex-day-title">Día B — Tren Superior avanzado</div><div class="ex-day-focus">Flexiones avanzadas, pull-ups, mayor volumen</div></div></div>  
+        <div class="exercises">  
+          <div class="ex-row"><div><div class="ex-name">Flexiones arquero (Archer push-ups)</div><div class="ex-tip">Abre los brazos y baja hacia un lado y luego el otro. Precursor de la push-up a una mano</div></div><div class="ex-sets"><div class="ex-sets-num">4×8</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Dominadas (Pull-ups)</div><div class="ex-tip">Si no puedes hacerlas, usa una mesa baja: cuerpo inclinado, tira de los codos</div></div><div class="ex-sets"><div class="ex-sets-num">3×max</div><div class="ex-sets-label">al fallo controlado</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Pike push-ups (hombros)</div><div class="ex-tip">Caderas arriba formando una V invertida, baja la cabeza entre las manos</div></div><div class="ex-sets"><div class="ex-sets-num">3×10</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Dips en silla con pies elevados</div><div class="ex-tip">Pies sobre otra silla para aumentar el rango de movimiento y dificultad</div></div><div class="ex-sets"><div class="ex-sets-num">3×12</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Remo con mochila cargada</div><div class="ex-tip">Mismo movimiento pero con 8-12 kg en la mochila. Progresa cada 2 semanas</div></div><div class="ex-sets"><div class="ex-sets-num">4×10</div><div class="ex-sets-label">c/ brazo</div></div></div>  
+        </div>  
+      </div>  
+    </div>  
+  
+    <div id="fase3" class="phase-content">  
+      <div class="alert" style="margin-bottom:20px;"><strong>Fase 3 – Intensificación (Semanas 15-24):</strong> Añades supersets, mayor carga y variantes avanzadas. Descansa 45-60 segundos.</div>  
+      <div class="exercise-day">  
+        <div class="ex-day-header"><div class="ex-day-num">A</div><div><div class="ex-day-title">Día A — Piernas + Core de élite</div><div class="ex-day-focus">Pistol squat, carga añadida, supersets</div></div></div>  
+        <div class="exercises">  
+          <div class="ex-row"><div><div class="ex-name">Pistol squat asistido → libre</div><div class="ex-tip">Sentadilla a una pierna. Empieza agarrándote de algo. Meta: hacerlo libre</div></div><div class="ex-sets"><div class="ex-sets-num">4×6</div><div class="ex-sets-label">c/ pierna</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Burpees</div><div class="ex-tip">Completo: bajar al piso, flexión, salto con palmada arriba. Sin parar entre reps</div></div><div class="ex-sets"><div class="ex-sets-num">4×10</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Sentadilla búlgara con mochila</div><div class="ex-tip">Añade 10-15 kg. Controla la bajada en 3 segundos, sube explosivo</div></div><div class="ex-sets"><div class="ex-sets-num">4×12</div><div class="ex-sets-label">c/ pierna</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Dragon flag (progresivo)</div><div class="ex-tip">El ejercicio de core más intenso. Empieza con versión inclinada antes de la versión completa</div></div><div class="ex-sets"><div class="ex-sets-num">3×6</div><div class="ex-sets-label">series×reps</div></div></div>  
+        </div>  
+      </div>  
+      <div class="exercise-day">  
+        <div class="ex-day-header"><div class="ex-day-num">B</div><div><div class="ex-day-title">Día B — Tren Superior de élite</div><div class="ex-day-focus">Push-up a una mano, muscle-up intro, supersets</div></div></div>  
+        <div class="exercises">  
+          <div class="ex-row"><div><div class="ex-name">Push-up a una mano (progresiva)</div><div class="ex-tip">Empieza con la otra mano sobre un libro elevado. Meta: las piernas abiertas ayudan</div></div><div class="ex-sets"><div class="ex-sets-num">3×5</div><div class="ex-sets-label">c/ brazo</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Dominadas lastradas (mochila)</div><div class="ex-tip">Pull-ups con 5-10 kg extra. Si no puedes 3 reps, quita peso</div></div><div class="ex-sets"><div class="ex-sets-num">4×max</div><div class="ex-sets-label">al fallo controlado</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Handstand push-ups (asistidas)</div><div class="ex-tip">Parado de manos contra la pared, baja la cabeza. Hombros de acero</div></div><div class="ex-sets"><div class="ex-sets-num">3×5</div><div class="ex-sets-label">series×reps</div></div></div>  
+          <div class="ex-row"><div><div class="ex-name">Superset: Dips + Remo</div><div class="ex-tip">Sin descanso entre los dos ejercicios. 60 segundos después del superset completo</div></div><div class="ex-sets"><div class="ex-sets-num">4×10</div><div class="ex-sets-label">cada uno</div></div></div>  
+        </div>  
+      </div>  
+    </div>  
+  </section>  
+  
+  <section>  
+    <div class="section-tag">Alimentación</div>  
+    <h2 class="section-title">COME PARA<br>CAMBIAR</h2>  
+    <p class="section-sub">No necesitas una dieta estricta. Necesitas reglas simples y sostenibles.</p>  
+    <div class="nutrition-grid">  
+      <div class="nut-card prot"><div class="nut-num">140<span class="nut-unit">g</span></div><div class="nut-label">Proteína / día</div></div>  
+      <div class="nut-card carb"><div class="nut-num">1800<span class="nut-unit">kcal</span></div><div class="nut-label">Calorías objetivo</div></div>  
+      <div class="nut-card fat"><div class="nut-num">-500<span class="nut-unit">kcal</span></div><div class="nut-label">Déficit diario</div></div>  
+    </div>  
+    <div class="rules-list">  
+      <div class="rule-item"><div class="rule-icon">🥩</div><div class="rule-text"><strong>Proteína es lo más importante (140g/día)</strong>Huevos, pollo, atún, legumbres, yogur griego. La proteína preserva el músculo mientras pierdes grasa.</div></div>  
+      <div class="rule-item"><div class="rule-icon">🚫</div><div class="rule-text"><strong>Elimina lo procesado (redúcelo 80%)</strong>Bebidas azucaradas, snacks de bolsa, comida rápida. Son los responsables del 70% de las calorías vacías.</div></div>  
+      <div class="rule-item"><div class="rule-icon">🥦</div><div class="rule-text"><strong>Verduras en cada comida principal</strong>Pocas calorías con mucho volumen. Te llenan sin engordar y mejoran la recuperación muscular.</div></div>  
+      <div class="rule-item"><div class="rule-icon">💧</div><div class="rule-text"><strong>2.5–3 litros de agua al día</strong>Mejora el rendimiento, reduce retención de líquidos y controla el apetito.</div></div>  
+      <div class="rule-item"><div class="rule-icon">🍽️</div><div class="rule-text"><strong>Regla del plato: proteína + verdura + carbohidrato</strong>50% verdura, 30% proteína magra, 20% carbohidrato complejo. Sin contar calorías.</div></div>  
+      <div class="rule-item"><div class="rule-icon">🎯</div><div class="rule-text"><strong>Sin dietas extremas ni ayunos agresivos</strong>Comer menos de 1500 kcal hace que el cuerpo queme músculo y baje el metabolismo → efecto rebote.</div></div>  
+    </div>  
+  </section>  
+  
+  <section>  
+    <div class="section-tag">Sin efecto rebote</div>  
+    <h2 class="section-title">POR QUÉ NO<br>HABRÁ REBOTE</h2>  
+    <p class="section-sub">El efecto rebote no es inevitable, es consecuencia de métodos incorrectos</p>  
+    <div class="rebote-grid">  
+      <div class="rebote-card"><div class="rebote-icon">📉</div><div class="rebote-title">Déficit moderado</div><div class="rebote-text">Solo -500 kcal/día. Nunca pasarás hambre real. El cuerpo no entra en modo supervivencia.</div></div>  
+      <div class="rebote-card"><div class="rebote-icon">💪</div><div class="rebote-title">Músculo = escudo</div><div class="rebote-text">Más músculo = más metabolismo basal. El músculo quema calorías incluso en reposo.</div></div>  
+      <div class="rebote-card"><div class="rebote-icon">📅</div><div class="rebote-title">Ritmo sostenible</div><div class="rebote-text">Perder 0.5-1 kg/semana es el rango donde se pierde grasa y no músculo.</div></div>  
+      <div class="rebote-card"><div class="rebote-icon">🧠</div><div class="rebote-title">Hábitos, no dieta</div><div class="rebote-text">No hay alimentos prohibidos. Aprendes a comer mejor, no a restringirte.</div></div>  
+      <div class="rebote-card"><div class="rebote-icon">🔄</div><div class="rebote-title">Refeeds estratégicos</div><div class="rebote-text">1 día a la semana comes al mantenimiento. Previene bajada hormonal y es psicológicamente sostenible.</div></div>  
+      <div class="rebote-card"><div class="rebote-icon">😴</div><div class="rebote-title">Sueño y cortisol</div><div class="rebote-text">7-8 horas reducen el cortisol. El cortisol alto aumenta el almacenamiento de grasa abdominal.</div></div>  
+    </div>  
+  </section>  
+  
+  <section>  
+    <div class="section-tag">Resultados esperados</div>  
+    <h2 class="section-title">QUÉ VAS A<br>VER Y CUÁNDO</h2>  
+    <p class="section-sub">Proyección realista basada en tu perfil. Resultados individuales pueden variar ±20%.</p>  
+    <div class="progress-timeline">  
+      <div class="prog-card"><div class="prog-month">MES 1</div><div class="prog-weight">79<span>kg</span></div><div class="prog-kg">−4 kg aprox.</div><div class="prog-changes"><div class="prog-change">Menos retención de líquido</div><div class="prog-change">Más energía diaria</div><div class="prog-change">Ropa menos ajustada</div><div class="prog-change">Mejor digestión</div></div></div>  
+      <div class="prog-card"><div class="prog-month">MES 2-3</div><div class="prog-weight">74<span>kg</span></div><div class="prog-kg">−9 kg aprox.</div><div class="prog-changes"><div class="prog-change">Cambio visible en espejo</div><div class="prog-change">Abdomen más plano</div><div class="prog-change">Brazos más tonificados</div><div class="prog-change">Mejor postura</div></div></div>  
+      <div class="prog-card"><div class="prog-month">MES 4-5</div><div class="prog-weight">70<span>kg</span></div><div class="prog-kg">−13 kg aprox.</div><div class="prog-changes"><div class="prog-change">Definición muscular visible</div><div class="prog-change">Mucha más fuerza</div><div class="prog-change">Comentarios del entorno</div><div class="prog-change">Hábitos automatizados</div></div></div>  
+      <div class="prog-card"><div class="prog-month">MES 6</div><div class="prog-weight">68<span>kg</span></div><div class="prog-kg">−15 kg aprox.</div><div class="prog-changes"><div class="prog-change">IMC ~24 (normal)</div><div class="prog-change">Cuerpo recompuesto</div><div class="prog-change">Base para gym o más</div><div class="prog-change">Sin efecto rebote</div></div></div>  
+    </div>  
+    <div class="alert" style="margin-top:24px;"><strong>📏 Mídete bien:</strong> El peso en la báscula no lo es todo. Mide también tu cintura, cadera y pecho cada 2 semanas.</div>  
+  </section>  
+  
+  <section style="border-bottom:none;">  
+    <div class="section-tag">Para que funcione</div>  
+    <h2 class="section-title">LAS 5 REGLAS<br>DE ORO</h2>  
+    <p class="section-sub">La diferencia entre los que lo logran y los que no.</p>  
+    <div class="rules-list">  
+      <div class="rule-item"><div class="rule-icon">1️⃣</div><div class="rule-text"><strong>Consistencia sobre perfección</strong>Hacer el 80% del plan todos los días es infinitamente mejor que hacer el 100% durante 2 semanas y abandonar.</div></div>  
+      <div class="rule-item"><div class="rule-icon">2️⃣</div><div class="rule-text"><strong>Progresión siempre</strong>Cada semana intenta una repetición más, un segundo más en la plancha, o más peso en la mochila.</div></div>  
+      <div class="rule-item"><div class="rule-icon">3️⃣</div><div class="rule-text"><strong>No saltes el calentamiento ni el estiramiento</strong>5 minutos antes y 5-10 después. Previenen lesiones que podrían parar tu progreso semanas.</div></div>  
+      <div class="rule-item"><div class="rule-icon">4️⃣</div><div class="rule-text"><strong>Registra todo</strong>Anota cada entrenamiento. Ver el progreso escrito es uno de los mayores motivadores.</div></div>  
+      <div class="rule-item"><div class="rule-icon">5️⃣</div><div class="rule-text"><strong>El descanso es entrenamiento</strong>El músculo crece mientras duermes. 7-8 horas de sueño es tan importante como la rutina.</div></div>  
+    </div>  
+  </section>  
+  
+</div>  
+  
+<footer>  
+  Plan diseñado para perfil: 20 años · 83 kg · 1.68 m · Sedentario · Meta: recomposición corporal sin gimnasio<br>  
+  Consulta con un profesional de salud antes de iniciar cualquier programa de ejercicio.  
+</footer>  
+  
+<script>  
+  function showPhase(id, btn) {  
+    document.querySelectorAll('.phase-content').forEach(el => el.classList.remove('active'));  
+    document.querySelectorAll('.phase-tab').forEach(el => el.classList.remove('active'));  
+    document.getElementById(id).classList.add('active');  
+    btn.classList.add('active');  
+  }  
+</script>  
+  
+</body>  
+</html>  
